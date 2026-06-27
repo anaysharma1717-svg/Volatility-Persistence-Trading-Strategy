@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+env/
+venv/
+ENV/
+*.log
+
+# Data & Datasets (Avoid checking in large historical CSVs/Zips)
+data/
+datasets/
+strategies/
+New folder/
+bin/
+*.csv
+*.zip
+*.png
+
+.vscode/
+.idea/
+.cursor/
+.jetro/
+.windsurfrules
+.mcp.json
+AGENT.md
+CLAUDE.md
+
+# OS
+.DS_Store
+Thumbs.db
