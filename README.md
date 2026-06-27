@@ -1,12 +1,12 @@
 # Volatility Persistence Trading Framework
 
-This repository contains a modular Python framework for backtesting and validating quantitative trading strategies on cryptocurrency assets. The platform simulates execution conditions, incorporating variable slippage models linked to market volatility, exchange fees, concurrent position limits, and partial take-profit logic.
+This repository contains a quantitative breakout-momentum trading strategy designed to exploit trend persistence in cryptocurrency markets (Bitcoin and Ethereum). The strategy enters positions based on candle color transitions (using either raw single-candle momentum or state-based trend tracking that requires two consecutive opposite candles to trigger a directional switch). Entries are restricted to New York session hours (09:00 to 17:00 ET), aligned with the broader 4-hour 200-period Exponential Moving Average trend, and executed only during high-volatility regimes where trend persistence is statistically stronger.
 
-The codebase includes components to run a combinatorial evaluation across 48 strategy configurations, which are then validated using a rolling walk-forward structure to measure out-of-sample performance on unseen market data.
+These strategies are evaluated using a modular backtesting framework that simulates realistic execution conditions, including a dynamic slippage model linked to volatility, trading fees, concurrent position limits, and a partial take-profit system. The codebase includes components to run a combinatorial backtest across 48 parameter configurations and validate robustness using rolling walk-forward out-of-sample testing.
 
 ---
 
-### Key Components
+### Framework Components
 
 Execution Engine
 The simulator supports concurrent position tracking across multiple assets, entry execution delay modeling, and intra-bar trigger checking for stops and take-profits.
