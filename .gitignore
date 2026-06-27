@@ -17,6 +17,7 @@ bin/
 *.csv
 *.zip
 *.png
+!reports/**/*.png
 
 .vscode/
 .idea/
