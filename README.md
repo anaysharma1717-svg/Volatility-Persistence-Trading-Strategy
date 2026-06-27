@@ -2,7 +2,7 @@
 
 This repository contains a quantitative breakout-momentum trading strategy designed to exploit trend persistence in cryptocurrency markets (Bitcoin and Ethereum). The strategy enters positions based on candle color transitions (using either raw single-candle momentum or state-based trend tracking that requires two consecutive opposite candles to trigger a directional switch). Entries are restricted to New York session hours (09:00 to 17:00 ET), aligned with the broader 4-hour 200-period Exponential Moving Average trend, and executed only during high-volatility regimes where trend persistence is statistically stronger.
 
-These strategies are evaluated using a modular backtesting framework that simulates realistic execution conditions, including a dynamic slippage model linked to volatility, trading fees, concurrent position limits, and a partial take-profit system. The codebase includes components to run a combinatorial backtest across 48 parameter configurations and validate robustness using rolling walk-forward out-of-sample testing.
+These strategies are evaluated using a modular backtesting framework that simulates realistic execution conditions, including a dynamic slippage model linked to volatility, trading fees, concurrent position limits, and a partial take-profit system. The codebase includes components to run a combinatorial backtest across 48 parameter configurations and evaluate performance stability across consecutive 4-month segments.
 
 ---
 
@@ -20,8 +20,8 @@ Slippage is modeled dynamically, scaling based on the prevailing volatility regi
 Trend and Filters
 Signals are filtered through a higher-timeframe trend direction filter (4-hour EMA) and New York session execution windows (09:00 to 17:00 ET) to minimize execution during low-liquidity periods.
 
-Walk-Forward Testing
-Parameters are evaluated across rolling windows to verify performance stability on unseen out-of-sample periods.
+Rolling Window Analysis
+Performance is evaluated across consecutive 4-month windows to verify strategy consistency over time.
 
 ---
 
@@ -51,7 +51,7 @@ To run the full backtest suite across all 48 parameter configurations:
 python scripts/run_full_backtest.py
 ```
 
-To run the rolling walk-forward validation:
+To run the rolling window backtest analysis:
 
 ```bash
 python scripts/run_walk_forward_v2.py
@@ -93,9 +93,9 @@ Performance Summary
 - Average Winner: $26,475
 - Average Loser: -$12,690
 
-Out-of-Sample Walk-Forward Windows
+Performance Across 4-Month Windows
 
-Rolling 4-month out-of-sample periods tested on unseen historical data:
+Performance breakdown across consecutive 4-month historical segments:
 
 | Window | Period | ROI | Sharpe | Status |
 |---|---|---|---|---|
@@ -107,7 +107,7 @@ Rolling 4-month out-of-sample periods tested on unseen historical data:
 | W6 | Jul 2025 - Nov 2025 | +49.5% | 3.30 | Profitable |
 | W7 | Nov 2025 - Mar 2026 | +66.2% | 4.44 | Profitable |
 
-The average out-of-sample return across all windows was +28.4% with an average Sharpe ratio of 2.15. The single unprofitable window (W2) occurred during a multi-month range-bound consolidation phase.
+The average return across all windows was +28.4% with an average Sharpe ratio of 2.15. The single unprofitable window (W2) occurred during a multi-month range-bound consolidation phase.
 
 ---
 
