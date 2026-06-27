@@ -165,6 +165,8 @@ def build_entry_trade(df, i, signal, current_capital, use_compounding, entry_del
         'entry_notional': float(entry_price * position_size),
         'opposite_count': 0,
         'is_ambiguous': False,
+        'highest_price': float(entry_price),
+        'lowest_price': float(entry_price),
     }
 
 # ---------------------------------------------------------------------------
@@ -457,6 +459,24 @@ def run_multi_candle_backtest(
         if 'DateTime' in df.columns and pd.notna(df['DateTime'].iat[exit_index]):
             exit_dt = df['DateTime'].iat[exit_index]
 
+        # Calculate excursion (MFE / MAE)
+        atr_ref = trade.get('atr14_at_entry') or trade.get('atr5_at_entry') or (trade.get('sl_distance', 1.0) / float(config.SL_ATR_MULT))
+        if atr_ref <= 0:
+            atr_ref = 1.0
+
+        highest = float(trade.get('highest_price', entry_mid))
+        lowest = float(trade.get('lowest_price', entry_mid))
+
+        if side == 'LONG':
+            mfe_price = highest - entry_mid
+            mae_price = entry_mid - lowest
+        else:
+            mfe_price = entry_mid - lowest
+            mae_price = highest - entry_mid
+
+        mfe_atr = mfe_price / atr_ref
+        mae_atr = mae_price / atr_ref
+
         results.append({
             'entry_index': int(trade['entry_index']),
             'exit_index': int(exit_index),
@@ -473,14 +493,22 @@ def run_multi_candle_backtest(
             'cost': pnl_data['total_cost'],
             'exit_dt': exit_dt,
             'is_ambiguous': bool(trade.get('is_ambiguous', False)),
+            'mfe_atr': float(mfe_atr),
+            'mae_atr': float(mae_atr),
         })
-
         current_capital = apply_trade_pnl(current_capital, pnl_data['pnl'])
 
     active_trades_per_candle = []
 
     for i in range(1, len(df)):
         signal = int(df[signal_col].iat[i]) if pd.notna(df[signal_col].iat[i]) else 0
+
+        # Update running MFE/MAE price extremes for open trades during this candle
+        high_px = float(df['High'].iat[i])
+        low_px = float(df['Low'].iat[i])
+        for trade in open_trades:
+            trade['highest_price'] = max(trade.get('highest_price', trade['entry_price']), high_px)
+            trade['lowest_price'] = min(trade.get('lowest_price', trade['entry_price']), low_px)
 
         # --- Check exits for all open trades ---
         trades_to_remove = []
@@ -531,6 +559,10 @@ def run_multi_candle_backtest(
                 entry_delay=entry_delay,
             )
             if new_trade is not None and new_trade['entry_index'] == i:
+                # Update price extremes for this new entry bar
+                new_trade['highest_price'] = max(new_trade.get('highest_price', new_trade['entry_price']), high_px)
+                new_trade['lowest_price'] = min(new_trade.get('lowest_price', new_trade['entry_price']), low_px)
+
                 # Check if this new trade would exit immediately on entry bar
                 exit_price, exit_reason, is_partial = evaluate_open_trade_exit(
                     df,

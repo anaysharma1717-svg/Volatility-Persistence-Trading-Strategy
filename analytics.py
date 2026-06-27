@@ -127,6 +127,9 @@ def compute_backtest_stats(details_df, initial_capital, final_capital, exit_date
     avg_loser  = float(losing_pnls.mean())  if not losing_pnls.empty else 0.0   # negative value
     return_drawdown_ratio = (roi_pct / max_drawdown_pct) if max_drawdown_pct > 0 else 0.0
 
+    avg_mfe_atr = float(df_res['mfe_atr'].mean()) if 'mfe_atr' in df_res.columns else 0.0
+    avg_mae_atr = float(df_res['mae_atr'].mean()) if 'mae_atr' in df_res.columns else 0.0
+
     return {
         'trades': int(trades), 'wins': wins, 'losses': losses, 'win_rate': float(win_rate),
         'expectancy_pnl': float(df_res['pnl'].mean()), 'expectancy_ret_pct': float(df_res['ret_pct'].mean()),
@@ -145,6 +148,8 @@ def compute_backtest_stats(details_df, initial_capital, final_capital, exit_date
         'avg_winner': float(avg_winner),
         'avg_loser': float(avg_loser),
         'return_drawdown_ratio': float(return_drawdown_ratio),
+        'avg_mfe_atr': avg_mfe_atr,
+        'avg_mae_atr': avg_mae_atr,
     }
 
 def compute_segment_stats(details_df, initial_capital, exit_dates=None):
