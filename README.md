@@ -4,6 +4,8 @@ This repository contains a quantitative breakout-momentum trading strategy desig
 
 These strategies are evaluated using a modular backtesting framework that simulates realistic execution conditions, including a dynamic slippage model linked to volatility, trading fees, concurrent position limits, and a partial take-profit system. The codebase includes components to run a combinatorial backtest across 48 parameter configurations and evaluate performance stability across consecutive 4-month segments.
 
+For the complete backtest performance breakdown, historical charts, monthly return heatmap, cost sensitivity stress tests, and market regime diagnostics, view the [Backtest Results Report](backtest_report.md).
+
 ---
 
 ### Framework Components

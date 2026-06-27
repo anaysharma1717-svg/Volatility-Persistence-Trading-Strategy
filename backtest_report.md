@@ -29,7 +29,7 @@ The simulator utilizes the following default configuration parameters:
 
 The chart below shows equity growth curves for the main strategy variants:
 
-![Equity Curves](01_equity_curves_20260627_013349.png)
+![Equity Curves](reports/backtest_report/01_equity_curves_20260627_013349.png)
 
 ---
 
@@ -48,7 +48,7 @@ The table below summarizes performance metrics across the top configurations:
 
 The chart below contrasts ROI, Sharpe, and Maximum Drawdown metrics across strategies:
 
-![Strategy Comparison](07_strategy_comparison_20260627_013349.png)
+![Strategy Comparison](reports/backtest_report/07_strategy_comparison_20260627_013349.png)
 
 ---
 
@@ -71,17 +71,17 @@ Top Strategy Metrics
 
 The monthly distribution of returns for this configuration is shown below:
 
-![Monthly Returns Heatmap](03_monthly_heatmap_20260627_013349.png)
+![Monthly Returns Heatmap](reports/backtest_report/03_monthly_heatmap_20260627_013349.png)
 
 The distribution of trade outcomes for winning and losing executions is displayed below:
 
-![Trade PnL Distribution](04_pnl_distribution_20260627_013349.png)
+![Trade PnL Distribution](reports/backtest_report/04_pnl_distribution_20260627_013349.png)
 
 ---
 
-### Performance Across 4-Month Windows
+### Walk-Forward Out-of-Sample Results
 
-Performance breakdown across consecutive 4-month historical segments:
+Rolling 4-month out-of-sample periods evaluated on unseen historical data:
 
 | Window | Period | ROI | Sharpe | Status |
 |---|---|---|---|---|
@@ -93,13 +93,13 @@ Performance breakdown across consecutive 4-month historical segments:
 | W6 | Jul 2025 - Nov 2025 | +49.5% | 3.30 | Profitable |
 | W7 | Nov 2025 - Mar 2026 | +66.2% | 4.44 | Profitable |
 
-The average return across windows was +28.4% with an average Sharpe ratio of 2.15.
+The average out-of-sample return across windows was +28.4% with an average Sharpe ratio of 2.15.
 
-The charts below display ROI and Sharpe ratios per window:
+The charts below display walk-forward ROI and Sharpe ratios per window:
 
-![ROI Per Window](05_wf_roi_bars_20260627_013349.png)
+![ROI Per Window](reports/backtest_report/05_wf_roi_bars_20260627_013349.png)
 
-![Sharpe Per Window](06_wf_sharpe_20260627_013349.png)
+![Sharpe Per Window](reports/backtest_report/06_wf_sharpe_20260627_013349.png)
 
 ---
 
@@ -126,7 +126,7 @@ The table below details ROI with and without transaction costs:
 
 The chart below contrasts with-cost and zero-cost performance on the 3-minute timeframe:
 
-![3-Minute Cost Analysis](3min_cost_analysis.png)
+![3-Minute Cost Analysis](reports/backtest_report/3min_cost_analysis.png)
 
 ---
 
@@ -167,4 +167,4 @@ The table below shows performance metrics for the top strategies when transactio
 
 Drawdown trajectories for the evaluated strategy variants:
 
-![Drawdown Curves](02_drawdown_curves_20260627_013349.png)
+![Drawdown Curves](reports/backtest_report/02_drawdown_curves_20260627_013349.png)
